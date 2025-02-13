@@ -1,0 +1,38 @@
+# Dependencies
+/node_modules
+node_modules/
+
+# Next.js build output
+/.next/
+/out/
+
+# Production
+/build
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env*.local
+.env
+
+# IDE
+.vscode/
+.idea/
+
+.next/cache/webpack/client-development/5.pack.gz
+.next/swc-darwin-arm64/next-swc.darwin-arm64.node
+.next/cache/webpack/client-development/3.pack.gz
+.next/cache/webpack/client-development/5.pack.gz
+.next/cache/webpack/client-development/index.pack.gz
+.next/cache/webpack/client-development/index.pack.gz.old
+.next/cache/webpack/server-development/7.pack.gz
+.next/cache/webpack/server-development/index.pack.gz
+.next/cache/webpack/server-development/index.pack.gz.old
+.next/cache/webpack/server-development/7.pack.gz
