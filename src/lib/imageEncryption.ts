@@ -52,7 +52,7 @@ export class ImageEncryption {
     }
 
     try {
-      const encrypted = Array.from(message).map((char, index) => {
+      const encrypted = [...message].map((char, index) => {
         const charCode = char.charCodeAt(0);
         const shift = imageData[index] % this.#ASCII_MAX;
         // Simple circular shift within ASCII range
@@ -81,7 +81,7 @@ export class ImageEncryption {
     }
 
     try {
-      const decrypted = Array.from(encrypted).map((char, index) => {
+      const decrypted = [...encrypted].map((char, index) => {
         const charCode = char.charCodeAt(0);
         const shift = imageData[index] % this.#ASCII_MAX;
         // Reverse the shift within ASCII range
