@@ -47,7 +47,7 @@ export class ImageEncryption {
     if (message.length > imageData.length) {
       return {
         success: false,
-        error: `Image is too small to encrypt the message. Need ${message.length} bytes, but image has ${imageData.length} bytes`
+        error: `The image is too small to encrypt the message. It need ${message.length} bytes, but has ${imageData.length} bytes`
       };
     }
 
@@ -67,7 +67,7 @@ export class ImageEncryption {
     } catch (error) {
       return {
         success: false,
-        error: 'Encryption failed'
+        error: `Encryption failed ${error}`,
       };
     }
   }
@@ -99,7 +99,7 @@ export class ImageEncryption {
     } catch (error) {
       return {
         success: false,
-        error: 'Decryption failed'
+        error: `Decryption failed: ${error}`,
       };
     }
   }
