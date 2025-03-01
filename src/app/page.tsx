@@ -25,14 +25,14 @@ export default function Home() {
     setError('');
   };
 
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
+  const handleDrop = (dragEvent: DragEvent<HTMLDivElement>) => {
+    dragEvent.preventDefault();
+    const file = dragEvent.dataTransfer.files[0];
     handleImageSelect(file);
   };
 
-  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const file = changeEvent.target.files?.[0];
     if (file) {
       handleImageSelect(file);
     }
@@ -156,4 +156,4 @@ export default function Home() {
       </div>
     </main>
   );
-} 
+}
