@@ -16,7 +16,7 @@ export default function Home() {
   const [error, setError] = useState('');
 
   const handleImageSelect = async (file: File) => {
-    if (!await ImageEncryption.validateImage(file)) {
+    if (!ImageEncryption.validateImageType(file)) {
       setError('Invalid image format. Please use JPG, PNG, or WebP.');
       return;
     }
@@ -46,7 +46,7 @@ export default function Home() {
 
     try {
       const imageData = await ImageEncryption.getImageData(keyImage);
-      const result = await ImageEncryption.encrypt(plainText, imageData);
+      const result = ImageEncryption.encrypt(plainText, imageData);
       
       if (result.success && result.message) {
         setEncryptedText(result.message);
@@ -68,7 +68,7 @@ export default function Home() {
 
     try {
       const imageData = await ImageEncryption.getImageData(keyImage);
-      const result = await ImageEncryption.decrypt(decryptInput, imageData);
+      const result = ImageEncryption.decrypt(decryptInput, imageData);
       
       if (result.success && result.message) {
         setDecryptedText(result.message);

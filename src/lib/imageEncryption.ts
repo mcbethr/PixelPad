@@ -6,9 +6,14 @@ interface EncryptionResult {
 }
 
 export class ImageEncryption {
-  private static readonly ASCII_MAX = 128; // Standard ASCII range (0-127)
+  /**
+   * Standard ASCII range (0-127)
+   */
+  static readonly #ASCII_MAX = 128;
 
-  static async validateImage(file: File): Promise<boolean> {
+  static validateImageType(file: File): boolean {
+    if(!file?.type) throw new Error('No file type is found');
+
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'webp'];
     return validTypes.includes(file.type);
   }
@@ -30,9 +35,9 @@ export class ImageEncryption {
     });
   }
 
-  static async encrypt(message: string, imageData: Uint8Array): Promise<EncryptionResult> {
-    // Validate that all characters are ASCII
-    if (!message.split('').every(char => char.charCodeAt(0) < this.ASCII_MAX)) {
+  static encrypt(message: string, imageData: Uint8Array): EncryptionResult {
+    const allCharactersAreASCII = message.split('').every(char => char.charCodeAt(0) < this.#ASCII_MAX)
+    if (!allCharactersAreASCII) {
       return {
         success: false,
         error: 'Message contains non-ASCII characters'
@@ -49,9 +54,9 @@ export class ImageEncryption {
     try {
       const encrypted = Array.from(message).map((char, index) => {
         const charCode = char.charCodeAt(0);
-        const shift = imageData[index] % this.ASCII_MAX;
+        const shift = imageData[index] % this.#ASCII_MAX;
         // Simple circular shift within ASCII range
-        const encryptedCode = (charCode + shift) % this.ASCII_MAX;
+        const encryptedCode = (charCode + shift) % this.#ASCII_MAX;
         return String.fromCharCode(encryptedCode);
       }).join('');
 
@@ -67,7 +72,7 @@ export class ImageEncryption {
     }
   }
 
-  static async decrypt(encrypted: string, imageData: Uint8Array): Promise<EncryptionResult> {
+  static decrypt(encrypted: string, imageData: Uint8Array): EncryptionResult {
     if (encrypted.length > imageData.length) {
       return {
         success: false,
@@ -78,11 +83,11 @@ export class ImageEncryption {
     try {
       const decrypted = Array.from(encrypted).map((char, index) => {
         const charCode = char.charCodeAt(0);
-        const shift = imageData[index] % this.ASCII_MAX;
+        const shift = imageData[index] % this.#ASCII_MAX;
         // Reverse the shift within ASCII range
         let decryptedCode = charCode - shift;
         if (decryptedCode < 0) {
-          decryptedCode += this.ASCII_MAX;
+          decryptedCode += this.#ASCII_MAX;
         }
         return String.fromCharCode(decryptedCode);
       }).join('');
