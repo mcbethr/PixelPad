@@ -16,7 +16,7 @@ export default function Home() {
   const [error, setError] = useState('');
 
   const handleImageSelect = async (file: File) => {
-    if (!await ImageEncryption.validateImage(file)) {
+    if (!ImageEncryption.validateImageType(file)) {
       setError('Invalid image format. Please use JPG, PNG, or WebP.');
       return;
     }
@@ -25,14 +25,14 @@ export default function Home() {
     setError('');
   };
 
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
+  const handleDrop = (dragEvent: DragEvent<HTMLDivElement>) => {
+    dragEvent.preventDefault();
+    const file = dragEvent.dataTransfer.files[0];
     handleImageSelect(file);
   };
 
-  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const file = changeEvent.target.files?.[0];
     if (file) {
       handleImageSelect(file);
     }
@@ -46,7 +46,7 @@ export default function Home() {
 
     try {
       const imageData = await ImageEncryption.getImageData(keyImage);
-      const result = await ImageEncryption.encrypt(plainText, imageData);
+      const result = ImageEncryption.encrypt(plainText, imageData);
       
       if (result.success && result.message) {
         setEncryptedText(result.message);
@@ -68,7 +68,7 @@ export default function Home() {
 
     try {
       const imageData = await ImageEncryption.getImageData(keyImage);
-      const result = await ImageEncryption.decrypt(decryptInput, imageData);
+      const result = ImageEncryption.decrypt(decryptInput, imageData);
       
       if (result.success && result.message) {
         setDecryptedText(result.message);
@@ -156,4 +156,4 @@ export default function Home() {
       </div>
     </main>
   );
-} 
+}

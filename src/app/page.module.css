@@ -45,7 +45,7 @@
 }
 
 .error {
-  color: red;
+  color: #ff0033;
   text-align: center;
   margin-top: 1rem;
 }
@@ -57,8 +57,9 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
+  transition: background-color 0.15s;
 
-.button:hover {
-  background-color: #0051a2;
-} 
+  &:hover {
+    background-color: #0051a2;
+  }
+}
